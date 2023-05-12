@@ -19,6 +19,7 @@
       }
     ]
   },
+  "repository": "git@github.com:lanyuechen/lili.git",
   "scripts": {
     "package": "vsce package",
     "vscode:prepublish": "npm run compile",

@@ -17,7 +17,16 @@
         "command": "lili.hello",
         "title": "Hello World"
       }
-    ]
+    ],
+    "views": {
+			"explorer": [
+				{
+					"type": "webview",
+					"id": "sider-view",
+					"name": "Sider view"
+				}
+			]
+		}
   },
   "repository": "git@github.com:lanyuechen/lili.git",
   "scripts": {

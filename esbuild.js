@@ -1,4 +1,6 @@
-const { build } = require("esbuild");
+const fs = require('fs');
+const { build } = require('esbuild');
+const { copy } = require('esbuild-plugin-copy');
 
 const baseConfig = {
   bundle: true,
@@ -14,6 +16,20 @@ const extensionConfig = {
   entryPoints: ["./src/extension.ts"],
   outfile: "./out/extension.js",
   external: ["vscode"],
+  plugins: [
+    copy({
+      assets: [
+        {
+          from: ['./node_modules/react/umd/react.production.min.js'],
+          to: ['./lib/react.min.js'],
+        },
+        {
+          from: ['./node_modules/react-dom/umd/react-dom.production.min.js'],
+          to: ['./lib/react-dom.min.js'],
+        },
+      ],
+    }),
+  ],
 };
 
 const watchConfig = {
@@ -39,12 +55,28 @@ const webviewConfig = {
   outfile: "./out/webview.js",
 };
 
+const reactConfig = {
+  ...baseConfig,
+  format: "esm",
+  target: "es2020",
+  entryPoints: fs.readdirSync('./src/views').map(name => `./src/views/${name}/index.jsx`),
+  outdir: "./out/views",
+  external: [
+    'react',
+    'react-dom',
+  ],
+};
+
 (async () => {
   const args = process.argv.slice(2);
   try {
     if (args.includes("--watch")) {
       // Build and watch source code
       console.log("[watch] build started");
+      await build({
+        ...reactConfig,
+        ...watchConfig,
+      });
       await build({
         ...extensionConfig,
         ...watchConfig,
@@ -56,6 +88,7 @@ const webviewConfig = {
       console.log("[watch] build finished");
     } else {
       // Build source code
+      await build(reactConfig);
       await build(extensionConfig);
       await build(webviewConfig);
       console.log("build complete");

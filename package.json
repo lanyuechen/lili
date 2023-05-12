@@ -19,14 +19,14 @@
       }
     ],
     "views": {
-			"explorer": [
-				{
-					"type": "webview",
-					"id": "sider-view",
-					"name": "Sider view"
-				}
-			]
-		}
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "sider-view",
+          "name": "Sider view"
+        }
+      ]
+    }
   },
   "repository": "git@github.com:lanyuechen/lili.git",
   "scripts": {
@@ -48,6 +48,7 @@
     "@typescript-eslint/parser": "^5.59.1",
     "@vscode/test-electron": "^2.3.0",
     "esbuild": "^0.16.17",
+    "esbuild-plugin-copy": "^2.1.1",
     "eslint": "^8.39.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
@@ -55,6 +56,8 @@
     "vsce": "^2.15.0"
   },
   "dependencies": {
-    "@vscode/webview-ui-toolkit": "^1.2.2"
+    "@vscode/webview-ui-toolkit": "^1.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

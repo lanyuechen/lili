@@ -3,8 +3,10 @@ import * as vscode from 'vscode';
 import { getUri } from './getUri';
 import { getNonce } from './getNonce';
 
-export function getHtmlContent(webview: vscode.Webview, extensionUri: vscode.Uri) {
-  const webviewUri = getUri(webview, extensionUri, ['out', 'webview.js']);
+export function getHtmlContent(webview: vscode.Webview, extensionUri: vscode.Uri, viewName: string) {
+  const reactUri = getUri(webview, extensionUri, ['out', 'lib', 'react.min.js']);
+  const reactDomUri = getUri(webview, extensionUri, ['out', 'lib', 'react-dom.min.js']);
+  const webviewUri = getUri(webview, extensionUri, ['out', 'views', viewName, 'index.js']);
 
   const nonce = getNonce();
 
@@ -18,8 +20,10 @@ export function getHtmlContent(webview: vscode.Webview, extensionUri: vscode.Uri
         <title>Hello World!</title>
       </head>
       <body>
-        <h1>Hello World!</h1>
-        <vscode-button id="howdy">Howdy!</vscode-button>
+        <div id="root"></div>
+        
+        <script nonce="${nonce}" src="${reactUri}"></script>
+        <script nonce="${nonce}" src="${reactDomUri}"></script>
         <script type="module" nonce="${nonce}" src="${webviewUri}"></script>
       </body>
     </html>

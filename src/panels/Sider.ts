@@ -22,7 +22,7 @@ export class SiderViewProvider implements vscode.WebviewViewProvider {
 			]
 		};
 
-		this._view.webview.html = getHtmlContent(webviewView.webview, this._extensionUri);
+		this._view.webview.html = getHtmlContent(webviewView.webview, this._extensionUri, 'Bye');
     
     this._setWebviewMessageListener(this._view.webview);
 	}

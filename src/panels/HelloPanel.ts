@@ -11,7 +11,7 @@ export class HelloPanel {
   private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
     this._panel = panel;
 
-    this._panel.webview.html = getHtmlContent(this._panel.webview, extensionUri);
+    this._panel.webview.html = getHtmlContent(this._panel.webview, extensionUri, 'Hello');
 
     this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 

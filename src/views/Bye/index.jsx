@@ -1,13 +1,7 @@
 // import * as React from 'react';
 // import { createRoot } from 'react-dom/client';
 
-// import { VSCodeButton } from '@vscode/webview-ui-toolkit/react';
-import { provideVSCodeDesignSystem, vsCodeButton, vsCodeCheckbox, Button } from '@vscode/webview-ui-toolkit';
-
-provideVSCodeDesignSystem().register(
-  vsCodeButton(),
-  vsCodeCheckbox(),
-);
+import { VSCodeButton } from '@vscode/webview-ui-toolkit/react';
 
 const vscode = acquireVsCodeApi();
 
@@ -15,7 +9,7 @@ const View = () => {
   return (
     <div>
       <h1>Bye, world!</h1>
-      <vscode-button>Bye</vscode-button>
+      <VSCodeButton>Bye</VSCodeButton>
     </div>
   );
 };

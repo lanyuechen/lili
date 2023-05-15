@@ -1,6 +1,8 @@
 const fs = require('fs');
 const { build } = require('esbuild');
 const { copy } = require('esbuild-plugin-copy');
+const { aliasPath } = require('esbuild-plugin-alias-path');
+const { globalExternals } = require('@fal-works/esbuild-plugin-global-externals');
 
 const baseConfig = {
   bundle: true,
@@ -17,6 +19,12 @@ const extensionConfig = {
   outfile: "./out/extension.js",
   external: ["vscode"],
   plugins: [
+    aliasPath({
+      alias: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        '@': './src',
+      }
+    }),
     copy({
       assets: [
         {
@@ -47,14 +55,6 @@ const watchConfig = {
   },
 };
 
-const webviewConfig = {
-  ...baseConfig,
-  target: "es2020",
-  format: "esm",
-  entryPoints: ["./src/webview/main.ts"],
-  outfile: "./out/webview.js",
-};
-
 const reactConfig = {
   ...baseConfig,
   format: "esm",
@@ -64,6 +64,17 @@ const reactConfig = {
   external: [
     'react',
     'react-dom',
+  ],
+  plugins: [
+    globalExternals({
+      'react': {
+        varName: 'React',
+      },
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'react-dom': {
+        varName: 'ReactDOM',
+      }
+    })
   ],
 };
 
@@ -81,16 +92,11 @@ const reactConfig = {
         ...extensionConfig,
         ...watchConfig,
       });
-      await build({
-        ...webviewConfig,
-        ...watchConfig,
-      });
       console.log("[watch] build finished");
     } else {
       // Build source code
       await build(reactConfig);
       await build(extensionConfig);
-      await build(webviewConfig);
       console.log("build complete");
     }
   } catch (err) {

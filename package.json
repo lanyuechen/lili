@@ -18,8 +18,17 @@
         "title": "Hello World"
       }
     ],
+    "viewsContainers": {
+			"activitybar": [
+				{
+					"id": "lili",
+					"title": "Robot",
+					"icon": "resources/robot.svg"
+				}
+			]
+		},
     "views": {
-      "explorer": [
+      "lili": [
         {
           "type": "webview",
           "id": "Gpt",

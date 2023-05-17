@@ -11,7 +11,7 @@ const vscode = acquireVsCodeApi();
 const View = () => {
   const [text, setText] = useState('');
   const [pending, setPending] = useState(false);
-  const [conversation, setConversation] = useState([]);
+  const [conversation, setConversation] = useState(vscode.getState() || []);
   const contentRef = useRef();
 
   useEffect(() => {
@@ -40,6 +40,7 @@ const View = () => {
     if (contentRef.current) {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
     }
+    vscode.setState(conversation);
   }, [conversation]);
 
   const handleSend = () => {
@@ -93,6 +94,8 @@ const View = () => {
             minRows: 3,
             maxRows: 3,
           }}
+          placeholder="Say something ..."
+          disabled={pending}
           value={text}
           onChange={(val) => setText(val)}
           onPressEnter={handleEnter}

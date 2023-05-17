@@ -35,6 +35,10 @@ const extensionConfig = {
           from: ['./node_modules/react-dom/umd/react-dom.production.min.js'],
           to: ['./lib/react-dom.min.js'],
         },
+        {
+          from: ['./node_modules/@arco-design/web-react/dist/css/arco.min.css'],
+          to: ['./lib/arco.min.css']
+        }
       ],
     }),
   ],
@@ -69,10 +73,19 @@ const reactConfig = {
     globalExternals({
       'react': {
         varName: 'React',
+        namedExports: [
+          'useState', 'useEffect', 'useMemo', 'useCallback', 'useContext', 'useReducer', 'useRef',
+          'useImperativeHandle', 'useLayoutEffect', 'useDebugValue', 'useDeferredValue', 'useTransition',
+          'useId', 'memo', 'forwardRef', 'createRef', 'createContext', 'cloneElement', 'isValidElement',
+          'Component', 'PureComponent', 'Fragment', 'Children',
+        ]
       },
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'react-dom': {
         varName: 'ReactDOM',
+        namedExports: [
+          'findDOMNode',
+        ]
       }
     })
   ],
